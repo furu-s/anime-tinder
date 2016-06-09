@@ -23,6 +23,9 @@
 <body>
     <!-- start padding container -->
     <div class="wrap">
+      <h4 class="text-center">好きなアニメマッチング！</h4>
+      <br>
+      <br>
       <!-- start jtinder container -->
       <div id="tinderslide">
         <ul>
