@@ -10,6 +10,9 @@
 /dist
 /tags
 *.mo
+/.htaccess
+/app/.htaccess
+/app/webroot/.htaccess
 
 # IDE and editor specific files #
 #################################
