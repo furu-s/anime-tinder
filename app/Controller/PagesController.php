@@ -37,6 +37,10 @@ class PagesController extends AppController {
  */
 	public $uses = array("User", "LikeAnswers", "DislikeAnswers");
 
+  public function beforeFilter() {
+    $this->Auth->allow("*");
+  }
+
 /**
  * Displays a view
  *
@@ -45,39 +49,45 @@ class PagesController extends AppController {
  *	or MissingViewException in debug mode.
  */
 	public function home() {
-		$this->autoLayout = false;
+    $user = $this->Auth->user();
 
-    if ($this->request->is("post")) {
-      $data = $this->request->data;
-      $user = $this->User->saveField("username", $data["username"]);
+    // 初回か、答えてから24時以上経過していれば回答できる
+    if ($user["User"]["last_answered"] == null || time() - strtotime($user["User"]["last_answered"]) > (3600 * 24)) {
+      if ($this->request->is("post")) {
+        $data = $this->request->data;
 
-      $this->Session->write("username", $data["username"]);
-
-      if ($data["like_ids"] != "") {
-        $like_ids = explode(",", $data["like_ids"]);
-        for($i = 0; $i < count($like_ids); $i++) {
-          $this->LikeAnswers->create();  
-          $this->LikeAnswers->saveField("question_id", $data["question_id"]);
-          $this->LikeAnswers->saveField("option_id", $like_ids[$i]);
-          $this->LikeAnswers->saveField("user_id", $user["User"]["id"]);
+        if ($data["like_ids"] != "") {
+          $like_ids = explode(",", $data["like_ids"]);
+          for($i = 0; $i < count($like_ids); $i++) {
+            $this->LikeAnswers->create();  
+            $this->LikeAnswers->saveField("question_id", $data["question_id"]);
+            $this->LikeAnswers->saveField("option_id", $like_ids[$i]);
+            $this->LikeAnswers->saveField("user_id", $user["User"]["id"]);
+          }
         }
-      }
-    
-      if ($data["dislike_ids"] != "") {
-        $dislike_ids = explode(",", $data["dislike_ids"]);
-        for($i = 0; $i < count($dislike_ids); $i++) {
-          $this->DislikeAnswers->create();  
-          $this->DislikeAnswers->saveField("question_id", $data["question_id"]);
-          $this->DislikeAnswers->saveField("option_id", $dislike_ids[$i]);
-          $this->DislikeAnswers->saveField("user_id", $user["User"]["id"]);
+      
+        if ($data["dislike_ids"] != "") {
+          $dislike_ids = explode(",", $data["dislike_ids"]);
+          for($i = 0; $i < count($dislike_ids); $i++) {
+            $this->DislikeAnswers->create();  
+            $this->DislikeAnswers->saveField("question_id", $data["question_id"]);
+            $this->DislikeAnswers->saveField("option_id", $dislike_ids[$i]);
+            $this->DislikeAnswers->saveField("user_id", $user["User"]["id"]);
+          }
         }
+
+        $this->User->id = $user["User"]["id"];
+        $this->User->saveField("last_answered", date("Y-m-d H:i:s"));
+        $this->redirect("/result");
       }
-
-      $redirectLink = "/result/?name=".$data['username'];
-
-      $this->redirect($redirectLink);
+    } else {
+      //$this->Session->setFlash("回答してから24時間は回答できませんよ！");
+      $this->redirect("/result");
     }
 
-    // $this->redirect("result");
+    // 最終更新日をupdate
+    $user = $this->User->findUserByID($user["User"]["id"]);
+    // $this->Session->write('Auth', $user["User"]);
+
 	}
 }

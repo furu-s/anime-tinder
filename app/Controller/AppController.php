@@ -31,4 +31,38 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+  public $components = array(
+    'Session',
+    'Auth' => array(
+      'loginError' => 'パスワードもしくはログインIDをご確認下さい。',
+      'authError' => 'ご利用されるにはログインが必要です。',
+      // デフォルト値
+      'loginAction' => array(
+        'controller' => 'users',
+        'action' => 'welcome'
+      ),
+      // ログイン後の飛び先
+      'loginRedirect' => array(
+        'controller' => 'pages',
+        'action' => 'home'
+      ),
+      'logoutRedirect' => array(
+        'controller' => 'users',
+        'action' => 'welcome'
+      ),
+      'authenticate' => array(
+        'Form' => array(
+          'userModel' => 'User',
+          'passwordHasher' => array(
+            'className' => 'None'
+            ),
+          'fields' => array('username' => 'oauth_token' , 'password'=>'oauth_token_secret'),
+          ),
+        ),
+      ),
+    );
+
+  public function beforeFilter() {
+    $this->set('auth', $this->Auth);
+  }
 }

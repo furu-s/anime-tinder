@@ -36,6 +36,10 @@
  */
 	Configure::write('debug', 2);
 
+  define('CONSUMER_KEY', '8FKd2OwEOxaZ1dj8kerzwppsa');
+  define('CONSUMER_SECRET', '8kN1Ixhgl6D6fUqgA8huzQ7xzijWsKioDX9ZCbFFyeyEwqPY62');
+  define('OAUTH_CALLBACK', 'http://local.anitme-tinder.com/twitters/callback');
+
 /**
  * Configure the Error handler used to handle errors for your application. By default
  * ErrorHandler::handleError() is used. It will display errors using Debugger, when debug > 0

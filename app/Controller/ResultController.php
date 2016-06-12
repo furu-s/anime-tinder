@@ -45,18 +45,12 @@ class ResultController extends AppController {
  *  or MissingViewException in debug mode.
  */
   public function index() {
-    $name = $this->request->query['name'];
-    $user = $this->User->findUserByUsername($name);
-
+    // ログインしているユーザーの情報を取得する
+    $auth_user = $this->Auth->user();
     $questionID = 1;
 
-
-    $myLikeAnswers    = $this->LikeAnswer->findLikeAnswerByquestionIDAndUserID($questionID, $user["User"]["id"]);
-    $myDislikeAnswers = $this->DislikeAnswer->findDislikeAnswerByquestionIDAndUserID($questionID, $user["User"]["id"]);
-
-    debug($myLikeAnswers);
-    debug($myDislikeAnswers);
-
+    $myLikeAnswers    = $this->LikeAnswer->findLikeAnswerByquestionIDAndUserID($questionID, $auth_user["User"]["id"]);
+    $myDislikeAnswers = $this->DislikeAnswer->findDislikeAnswerByquestionIDAndUserID($questionID, $auth_user["User"]["id"]);
 
     // IDだけ取り出す
     $myLikeAnswerIDs = array();
@@ -76,7 +70,7 @@ class ResultController extends AppController {
     $match_users = array();
 
     // すべてのユーザーのIDを取得する
-    $users = $this->User->findAllOtherUsers($user["User"]["id"]);
+    $users = $this->User->findAllOtherUsers($auth_user["User"]["id"]);
     foreach($users as $user) {
       $otherUserID = $user["User"]["id"];
       $otherLikeAnswers[$otherUserID]    = $this->LikeAnswer->findLikeAnswerByquestionIDAndUserID($questionID, $otherUserID);
@@ -107,6 +101,6 @@ class ResultController extends AppController {
       array_push($match_users, $this->User->findUserByID($math_user_ids));
     }
 
-    $this->set(compact("name", "myLikeAnswers", "myDislikeAnswers", "match_users"));;
+    $this->set(compact("auth_user", "myLikeAnswers", "myDislikeAnswers", "match_users"));;
   }
 }
