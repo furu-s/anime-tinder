@@ -39,7 +39,7 @@
 <div id="last-card" class="text-center">
 <img src="/img/loading.gif" alt="">
 </div>
-<form action="" method="post" id="form">
+<form method="post" id="form">
 <input type="hidden" name="question_id" id="question_id" value="1">
 <input type="hidden" name="like_ids" id="likeIDs" value="">
 <input type="hidden" name="dislike_ids" id="dislikeIDs" value="">

@@ -14,11 +14,13 @@ $("#tinderslide").jTinder({
       console.log(dislike_ids);
 
       if (like_ids.length + dislike_ids.length == 3) {
-        $("#last-card").fadeIn();
-        $("#dislikeIDs").attr("value", dislike_ids);
-        $("#likeIDs").attr("value", like_ids);
-        console.log("=========");
-        $('#form').submit();
+        $.when(
+          $("#last-card").fadeIn(),
+          $("#dislikeIDs").attr("value", dislike_ids),
+          $("#likeIDs").attr("value", like_ids)
+        ).done(function(){
+          $('#form').submit();
+        });
       }
     },
     onLike: function (item) {
