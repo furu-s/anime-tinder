@@ -31,7 +31,7 @@
 <!-- end padding container -->
 
 <!-- jTinder trigger by buttons  -->
-<div class="actions">
+<div class="actions clearfix">
     <a href="#" class="dislike"><i></i></a>
     <a href="#" class="like"><i></i></a>
 </div>

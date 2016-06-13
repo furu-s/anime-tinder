@@ -11,7 +11,7 @@ body {
 
 /* Wrapper with padding */
 .wrap  {
-    height: 500px;
+    height: 250px;
     padding: 2%;
 }
 
@@ -116,9 +116,9 @@ body {
 
 /* Image container */
 #tinderslide .img {
-    height: 90%;
+    height: 85%;
     width: 100%;
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
     position: relative;
     -webkit-transform: translate3d(0%,0,0) scale3d(1,1,1);
     -moz-transform: translate3d(0%,0,0) scale3d(1,1,1);
@@ -136,7 +136,7 @@ body {
 .actions {
     text-align: center;
     width: 304px;
-    margin: 0 auto;
+    margin: 30px auto 0;
     overflow: hidden;
 }
 
