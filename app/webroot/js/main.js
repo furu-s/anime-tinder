@@ -29,14 +29,13 @@ $("#tinderslide").jTinder({
       console.log(like_ids);
       console.log(dislike_ids);
       if (like_ids.length + dislike_ids.length == 3) {
-        $("#last-card").fadeIn();
-        $("#dislikeIDs").attr("value", dislike_ids);
-        $("#likeIds").attr("value", like_ids);
-        console.log("=========");
-        $('#form').submit();
-        // $("#form").bind('ajax:complete', function() {
-        //   alert("送信完了！")
-        // });
+        $.when(
+          $("#last-card").fadeIn(),
+          $("#dislikeIDs").attr("value", dislike_ids),
+          $("#likeIDs").attr("value", like_ids)
+        ).done(function(){
+          $('#form').submit();
+        });
       }
     },
   animationRevertSpeed: 200,

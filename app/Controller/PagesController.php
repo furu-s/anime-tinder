@@ -84,7 +84,7 @@ class PagesController extends AppController {
       //$this->Session->setFlash("回答してから24時間は回答できませんよ！");
 
       // デバック用に解除
-      $this->redirect("/result");
+      //$this->redirect("/result");
 
     }
 
