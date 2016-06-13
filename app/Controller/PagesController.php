@@ -83,9 +83,10 @@ class PagesController extends AppController {
     } else {
       //$this->Session->setFlash("回答してから24時間は回答できませんよ！");
 
-      // デバック用に解除
-      //$this->redirect("/result");
-
+      // ローカルではリダイレクトしない
+      if ($_SERVER["HTTP_HOST"] != "local.anitme-tinder.com") {
+        $this->redirect("/result");  
+      }
     }
 
     // 最終更新日をupdate
