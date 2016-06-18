@@ -35,7 +35,7 @@ class PagesController extends AppController {
  *
  * @var array
  */
-	public $uses = array("User", "LikeAnswers", "DislikeAnswers");
+	public $uses = array("User",  "Option", "LikeAnswers", "DislikeAnswers");
 
   public function beforeFilter() {
     $this->Auth->allow("*");
@@ -50,6 +50,9 @@ class PagesController extends AppController {
  */
 	public function home() {
     $user = $this->Auth->user();
+
+    //今はquestionIDは今季アニメの1とする
+    $options = $this->Option->findOptionbyQuestionID(1);
 
     // 初回か、答えてから24時以上経過していれば回答できる
     if ($user["User"]["last_answered"] == null || time() - strtotime($user["User"]["last_answered"]) > (3600 * 24)) {
@@ -92,6 +95,8 @@ class PagesController extends AppController {
     // 最終更新日をupdate
     $user = $this->User->findUserByID($user["User"]["id"]);
     // $this->Session->write('Auth', $user["User"]);
+
+    $this->set(compact("options"));
 
 	}
 }

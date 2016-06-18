@@ -6,24 +6,26 @@
   <!-- start jtinder container -->
   <div id="tinderslide">
     <ul>
-      <li class="pane1">
-        <div class="img"><img src="/img/anime/kaminomi.jpg" width="100%"></div>
-        <div>神のみぞ知る世界</div>
+      <?php for($i = 4; $i < 24; $i++ ): ?>
+      <li class="pane<?php if($i%2 == 1){echo '1';} else {echo '0';}; ?>">
+        <div class="img"><img src="/img/anime/anime_<?php echo $i; ?>.jpg" width="100%"></div>
+        <div><?php echo $options[$i-1]["Option"]["name"]; ?></div>
         <div class="like"></div>
         <div class="dislike"></div>
       </li>
-      <li class="pane2">
+      <?php endfor; ?>
+      <!-- <li class="pane1">
         <div class="img"><img src="/img/anime/kinmoza.jpg" width="100%"></div>
         <div>金色モザイク</div>
         <div class="like"></div>
         <div class="dislike"></div>
       </li>
-      <li class="pane3">
+      <li class="pane1">
         <div class="img"><img src="/img/anime/sao.jpg" width="100%"></div>
         <div>ソードアートオンライン</div>
         <div class="like"></div>
         <div class="dislike"></div>
-      </li>
+      </li> -->
     </ul>
   </div>
   <!-- end jtinder container -->

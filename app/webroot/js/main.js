@@ -13,7 +13,7 @@ $("#tinderslide").jTinder({
       console.log(like_ids);
       console.log(dislike_ids);
 
-      if (like_ids.length + dislike_ids.length == 3) {
+      if (like_ids.length + dislike_ids.length == 20) {
         $.when(
           $("#last-card").fadeIn(),
           $("#dislikeIDs").attr("value", dislike_ids),
@@ -28,7 +28,7 @@ $("#tinderslide").jTinder({
       like_ids.push(item.index() + 1);
       console.log(like_ids);
       console.log(dislike_ids);
-      if (like_ids.length + dislike_ids.length == 3) {
+      if (like_ids.length + dislike_ids.length == 20) {
         $.when(
           $("#last-card").fadeIn(),
           $("#dislikeIDs").attr("value", dislike_ids),
